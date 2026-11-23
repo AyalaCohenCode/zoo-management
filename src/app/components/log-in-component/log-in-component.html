@@ -1,0 +1,25 @@
+<div class="page">
+    <div class="card">
+        <h2>כניסה למערכת</h2>
+        <form #loginForm="ngForm" (ngSubmit)="login()">
+            <input type="text" name="id" placeholder="הקש תעודת זהות" required pattern="[0-9]{1,}" maxLength="9"
+                minlength="9" [(ngModel)]="s.v.idVisitors" #tz="ngModel"><br>
+            <div *ngIf="tz.invalid && (tz.dirty || tz.touched)">
+                <p *ngIf="tz.hasError('required')">שדה חובה</p>
+                <p *ngIf="tz.hasError('pattern')">מכיל רק מספרים</p>
+                <p *ngIf="tz.hasError('minlength')">תעודת זהות קצרה מדי</p>
+            </div>
+
+            <input type="email" name="mail" placeholder="הקש כתובת מייל" required email [(ngModel)]="s.v.emailVisitors"
+                #email="ngModel"><br>
+            <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                <p *ngIf="email.hasError('required')">שדה חובה</p>
+                <p *ngIf="email.hasError('email')">פורמט מייל לא תקין</p>
+            </div>
+
+            <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">
+                כניסה
+            </button>
+        </form>
+    </div>
+</div>

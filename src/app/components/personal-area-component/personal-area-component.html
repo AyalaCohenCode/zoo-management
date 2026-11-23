@@ -1,0 +1,83 @@
+<div class="page">
+    <div *ngIf="ts.tickets.length === 0">
+        <h3>אין הזמנות עדיין</h3>
+        <p>ניתן לבצע הזמנה חדשה בעמוד הזמנת כרטיסים</p>
+    </div>
+    
+    <table *ngIf="ts.tickets.length > 0">
+        <tr>
+            <th>קוד משתמש</th>
+            <th>תאריך הזמנה</th>
+            <th>מחיר הזמנה כולל</th>
+            <th>מחיקה</th>
+            <th>עדכון</th>
+            <th>פרטים נוספים</th>
+        </tr>
+        <tr *ngFor="let ticket of ts.tickets; let i = index" (click)="selectTicket(ticket)">
+            <td>{{ticket.idVisitors}}</td>
+            <td>{{ticket.visitDate | date:'dd/MM/yyyy'}}</td>
+            <td>{{ticket.priceTickets}}</td>
+            <td>
+                <button class="btn btn-danger" (click)="deleteTicket(i)">
+                    מחק
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-primary" *ngIf="isFutureDate(ticket.visitDate)" (click)="editTicket(ticket)">
+                    עדכן
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-secondary" (click)="showDetails = true; selectTicket(ticket)">
+                    פרטים נוספים
+                </button>
+        </tr>
+    </table>
+
+    <div *ngIf="showDetails && selectedTicket">
+
+        <h3>פרטי הזמנה</h3>
+
+        <p>קוד כרטיס: {{ selectedTicket.codeTickets }}</p>
+        <p>תעודת זהות: {{ selectedTicket.idVisitors }}</p>
+        <p>תאריך: {{ selectedTicket.visitDate | date:'dd/MM/yyyy' }}</p>
+        <p>מבוגרים: {{ selectedTicket.numAdult }}</p>
+        <p>ילדים: {{ selectedTicket.numChild }}</p>
+        <p>מחיר: {{ selectedTicket.priceTickets }}</p>
+
+        <button class="btn btn-secondary" (click)="showDetails = false">
+            סגור
+        </button>
+
+    </div>
+
+    <div *ngIf="flag">
+        <h3>עדכון כרטיס</h3>
+        <form #updateForm="ngForm" (ngSubmit)="saveUpdate()" novalidate>
+            <label>תאריך הזמנה:</label>
+            <input type="date" name="visitDate" [(ngModel)]="updatedTicket.visitDate" #visitDate="ngModel" required />
+            <div *ngIf="visitDate.invalid && (visitDate.dirty || visitDate.touched)">
+                <small *ngIf="visitDate.errors?.['required']">שדה חובה</small>
+            </div>
+
+            <label>מספר כרטיסים למבוגר:</label>
+            <input type="number" name="numAdult" [(ngModel)]="updatedTicket.numAdult" #numAdult="ngModel" required min="0" />
+            <div *ngIf="numAdult.invalid && (numAdult.dirty || numAdult.touched)">
+                <small *ngIf="numAdult.errors?.['required']">שדה חובה</small>
+                <small *ngIf="numAdult.errors?.['min']">לא ניתן להזין מספר שלילי</small>
+            </div>
+
+            <label>מספר כרטיסים לקטין:</label>
+            <input type="number" name="numChild" [(ngModel)]="updatedTicket.numChild" #numChild="ngModel" required min="0" />
+            <div *ngIf="numChild.invalid && (numChild.dirty || numChild.touched)">
+                <small *ngIf="numChild.errors?.['required']">שדה חובה</small>
+                <small *ngIf="numChild.errors?.['min']">לא ניתן להזין מספר שלילי</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-ghost" (click)="flag=false">ביטול</button>
+                <button type="submit" class="btn btn-primary" [disabled]="updateForm.invalid">שמור</button>
+            </div>
+        </form>
+    </div>
+</div>

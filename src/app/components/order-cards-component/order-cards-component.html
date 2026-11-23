@@ -1,0 +1,65 @@
+<div class="page">
+
+  <div class="card">
+    <h2>הזמנת כרטיסים</h2>
+    <form [formGroup]="visitor" (ngSubmit)="submitOrder()" novalidate>
+      <label>
+        תעודת זהות
+        <input formControlName="idVisitors" type="text" maxlength="9" inputmode="numeric" pattern="[0-9]*"
+          placeholder="Enter user id" [readonly]="!s.flag">
+      </label>
+      <div *ngIf="idVisitors.invalid && (idVisitors.touched || idVisitors.dirty)" class="error">
+        <small *ngIf="idVisitors.errors?.['required']">מספר זה חובה</small>
+        <small *ngIf="idVisitors.errors?.['pattern']">רק ספרות מותרות</small>
+        <small *ngIf="idVisitors.errors?.['maxlength']">מקסימום 9 ספרות</small>
+      </div><br><br>
+
+      <label>
+        שם
+        <input formControlName="nameVisitors" type="text" placeholder="Enter user name" [readonly]="!s.flag">
+      </label>
+      <div *ngIf="nameVisitors.invalid && (nameVisitors.touched || nameVisitors.dirty)" class="error">
+        <small *ngIf="nameVisitors.errors?.['required']">שם חובה</small>
+        <small *ngIf="nameVisitors.errors?.['pattern']">רק אותיות עבריות/לטיניות ורווחים</small>
+      </div><br><br>
+
+      <label>
+        אימייל
+        <input formControlName="emailVisitors" type="email" placeholder="Enter user email">
+      </label>
+      <div *ngIf="emailVisitors.invalid && (emailVisitors.touched || emailVisitors.dirty)" class="error">
+        <small *ngIf="emailVisitors.errors?.['required']">אימייל חובה</small>
+        <small *ngIf="emailVisitors.errors?.['email']">פורמט אימייל לא תקין</small>
+      </div><br><br>
+
+      <label>
+        תאריך
+        <input formControlName="dateVisitor" type="date" placeholder="Select date">
+      </label>
+      <div *ngIf="dateVisitor.invalid && (dateVisitor.touched || dateVisitor.dirty) ||  (dateVisitor.touched || dateVisitor.dirty) && !isDateCorrect(dateVisitor.value)" class="error">
+        <small *ngIf="dateVisitor.errors?.['required']">תאריך חובה</small>
+        <small *ngIf="!isDateCorrect(dateVisitor.value)">התאריך חייב להיות מחר או מאוחר יותר</small>
+      </div><br><br>
+
+      <label>
+        כרטיסים 18+
+        <input formControlName="cards18Plus" type="number" min="0" placeholder="Enter cards for 18+">
+      </label>
+      <div *ngIf="cards18Plus.invalid && (cards18Plus.touched || cards18Plus.dirty)" class="error">
+        <small *ngIf="cards18Plus.errors?.['min']">לא ניתן להזין מספר שלילי</small>
+      </div><br><br>
+
+      <label>
+        כרטיסים מתחת ל-18
+        <input formControlName="cardsUnder18" type="number" min="0" placeholder="Enter cards for lower than 18">
+      </label>
+      <div *ngIf="cardsUnder18.invalid && (cardsUnder18.touched || cardsUnder18.dirty)" class="error">
+        <small *ngIf="cardsUnder18.errors?.['min']">לא ניתן להזין מספר שלילי</small>
+      </div><br><br>
+
+      <button class="btn btn-primary" type="submit" [disabled]="visitor.invalid">
+        סיום הזמנה
+      </button>
+    </form>
+  </div>
+</div>

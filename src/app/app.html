@@ -1,0 +1,11 @@
+<div class="navbar">
+    <button routerLink="/home">Home</button>
+    <button *ngIf="s.flag" routerLink="/login">Log In</button>
+    <button *ngIf="s.flag==false" routerLink="/login" (click)="logOut()">Log Out</button>
+    <button routerLink="/ourAnimals">Our Animals</button>
+    <button routerLink="/orderCards">Order cards</button>
+    <button *ngIf="s.flag==false" routerLink="/personalArea">Personal Area</button>
+    <br><br>
+    <p *ngIf="!s.flag">שלום ל {{s.v.nameVisitors}}</p>
+</div>
+<router-outlet></router-outlet>

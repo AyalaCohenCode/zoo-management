@@ -1,0 +1,19 @@
+<div class="page">
+
+    <div class="animals-grid">
+
+        <div class="card animal-card" *ngFor="let a of animals">
+            <img [src]="a.image" [alt]="a.nameAnimals" (click)="showImage(a)">
+            <h3>{{ a.nameAnimals }}</h3>
+        </div>
+
+    </div>
+
+    <div *ngIf="flag" class="card">
+        <h3>{{ selectedAnimal.nameAnimals }}</h3>
+        <p>{{ selectedAnimal.description }}</p>
+        <img [src]="selectedAnimal.image">
+        <button class="btn btn-secondary" (click)="closeImage()">סגור</button>
+    </div>
+
+</div>

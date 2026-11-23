@@ -1,0 +1,36 @@
+.page {
+  display: flex;
+  justify-content: center;
+  padding: 22px;
+}
+
+.card {
+  width: min(100%, 720px);
+  padding: 22px;
+  border-radius: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  min-height: 44px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+form {
+  display: grid;
+  gap: 14px;
+}
+
+button {
+  width: fit-content;
+  padding: 10px 16px;
+  border-radius: 12px;
+}
